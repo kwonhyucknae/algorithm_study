@@ -1,0 +1,39 @@
+public int maxProfit(int[] prices) {
+        int []mexDigit = new int[prices.length];
+        int mex = 0;
+        // 이중 포문을 돌아서 , 자기보다 낮은 값들을 찾은 다음에
+        // -1 의 mexDigt + 그 값 - 자기값 해봄 , 자기 이전의 mexDigit 이랑 비교해서 더 크면 바꿈
+        for(int i=0; i< prices.length; i++) {
+            for(int j= 0; j< i; j++) {
+                int temp = 0;
+                if(prices[j] < prices[i]) {
+                    if(j == 0) {
+                    temp = prices[i] - prices[j];
+                    } else {
+                    temp = mexDigit[j-1] + (prices[i] - prices[j]);
+                }
+
+                if(mexDigit[i-1] > temp) {
+                    temp = mexDigit[i-1];
+                }
+
+                if (mexDigit[i] < temp) {
+                    mexDigit[i] = temp;
+                }
+
+                }
+            }
+
+            if ( i != 0 && mexDigit[i] < mexDigit[i-1]) {
+                mexDigit[i] = mexDigit[i-1];
+            }
+        }
+
+        for(int i=0;i<mexDigit.length;i++) {
+            if(mex< mexDigit[i]) {
+                mex = mexDigit[i];
+            }
+        }
+        return mex;
+
+}
